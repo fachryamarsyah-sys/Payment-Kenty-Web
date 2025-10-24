@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment By Kentystoore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff416c;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            animation: gradientShift 10s ease infinite;
+            background-size: 400% 400%;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            animation: fadeInDown 1s ease;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .payment-section, .group-section, .channel-section {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1s ease;
+            transition: transform 0.3s ease;
+        }
+
+        .payment-section:hover, .group-section:hover, .channel-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--accent);
+        }
+
+        .payment-method {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.02);
+        }
+
+        .payment-method h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .payment-method p {
+            margin: 5px 0;
+            font-size: 0.95rem;
+        }
+
+        .qris-container {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .qris-image {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .qris-image:hover {
+            transform: scale(1.05);
+        }
+
+        .group-list, .channel-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .group-item, .channel-item {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .group-item:hover, .channel-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(5px);
+        }
+
+        .group-icon, .channel-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .group-info h3, .channel-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .group-info p, .channel-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            background: #ff2b5e;
+            transform: scale(1.05);
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+            animation: slideInRight 0.5s ease;
+        }
+
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .music-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        .music-info {
+            font-size: 0.9rem;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100vw) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .music-player {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-money-bill-wave"></i> Payment Gateway</h1>
+            <p>Silakan pilih metode pembayaran yang tersedia</p>
+        </header>
+        
+        <div class="main-content">
+            <section class="payment-section">
+                <h2 class="section-title"><i class="fas fa-credit-card"></i> Metode Pembayaran</h2>
+                
+                <div class="payment-method">
+                    <h3><i class="fas fa-mobile-alt"></i> DANA</h3>
+                    <p>Nomor: 083182576621</p>
+                    <p>A/N: SURYANITA</p>
+                    <button class="copy-btn" data-text="083182576621">
+                        <i class="fas fa-copy"></i> Salin Nomor
+                    </button>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fab fa-google-wallet"></i> GOPAY</h3>
+                    <p>Nomor: 083182576621</p>
+                    <p>A/N: SURYANITA</p>
+                    <button class="copy-btn" data-text="083182576621">
+                        <i class="fas fa-copy"></i> Salin Nomor
+                    </button>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fas fa-wallet"></i> OVO</h3>
+                    <p>Tidak Tersedia</p>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fas fa-qrcode"></i> QRIS</h3>
+                    <div class="qris-container">
+                        <img src="https://kennpay.edgeone.app/20250724_194521.jpg" alt="QR Code" class="qris-image">
+                    </div>
+                </div>
+            </section>
+            
+            <section class="group-section">
+                <h2 class="section-title"><i class="fas fa-users"></i> Grup WhatsApp</h2>
+                
+                <div class="group-list">
+                    <a href="https://chat.whatsapp.com/KRqvWlwISA0EhCG2vjfs69" target="_blank" class="group-item">
+                        <div class="group-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="group-info">
+                            <h3>GRUB BLOXFRUITS</h3>
+                            <p>Diskusi tentang Blox Fruits</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://chat.whatsapp.com/ErQLC4dIQtA4jUKbwaIDLg" target="_blank" class="group-item">
+                        <div class="group-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="group-info">
+                            <h3>GRUB FISCHT IT</h3>
+                            <p>Komunitas IT dan Programming</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://chat.whatsapp.com/DwtRdIYUk3GACKBImKBqW5" target="_blank" class="group-item">
+                        <div class="group-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="group-info">
+                            <h3>GRUB PLANT VS BRAINROT</h3>
+                            <p>Gaming community</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://chat.whatsapp.com/HTnqbj0q1nJBQmIugUUttC" target="_blank" class="group-item">
+                        <div class="group-icon">
+                            <i class="fas fa-map"></i>
+                        </div>
+                        <div class="group-info">
+                            <h3>GRUB ALL MAP ROBLOX</h3>
+                            <p>Sharing map Roblox</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
+            <section class="channel-section">
+                <h2 class="section-title"><i class="fas fa-broadcast-tower"></i> Saluran</h2>
+                
+                <div class="channel-list">
+                    <a href="https://whatsapp.com/channel/0029VbArPLQ0QeahxgB2if33" target="_blank" class="channel-item">
+                        <div class="channel-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="channel-info">
+                            <h3>Saluran WhatsApp</h3>
+                            <p>Update terbaru dan informasi</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <div class="music-player">
+        <div class="music-info">
+            <i class="fas fa-music"></i> Here With Me
+        </div>
+        <div class="music-controls">
+            <button class="music-btn" id="playBtn">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="music-btn" id="pauseBtn">
+                <i class="fas fa-pause"></i>
+            </button>
+            <button class="music-btn" id="volumeBtn">
+                <i class="fas fa-volume-up"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i> Berhasil disalin ke clipboard!
+    </div>
+    
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <script>
+        // Membuat elemen mengambang
+        const floatingContainer = document.getElementById('floatingElements');
+        for (let i = 0; i < 15; i++) {
+            const element = document.createElement('div');
+            element.classList.add('floating-element');
+            element.style.left = `${Math.random() * 100}%`;
+            element.style.top = `${Math.random() * 100}%`;
+            element.style.width = `${Math.random() * 30 + 10}px`;
+            element.style.height = element.style.width;
+            element.style.animationDuration = `${Math.random() * 20 + 10}s`;
+            element.style.animationDelay = `${Math.random() * 5}s`;
+            floatingContainer.appendChild(element);
+        }
+
+        // Fungsi untuk menyalin teks ke clipboard
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const textToCopy = this.getAttribute('data-text');
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showNotification();
+                });
+            });
+        });
+
+        // Menampilkan notifikasi
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Kontrol musik
+        const audio = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const volumeBtn = document.getElementById('volumeBtn');
+        
+        // Otomatis putar musik (dengan interaksi pengguna)
+        document.body.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play().catch(e => console.log('Autoplay diblokir:', e));
+            }
+        }, { once: true });
+        
+        playBtn.addEventListener('click', () => {
+            audio.play();
+        });
+        
+        pauseBtn.addEventListener('click', () => {
+            audio.pause();
+        });
+        
+        volumeBtn.addEventListener('click', () => {
+            if (audio.muted) {
+                audio.muted = false;
+                volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            } else {
+                audio.muted = true;
+                volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            }
+        });
+
+        // Animasi untuk elemen saat scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.payment-section, .group-section, .channel-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
